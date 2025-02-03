@@ -1,15 +1,11 @@
+import React from "react";
 import styles from "./page.module.css";
 import { Card, Layout, List } from "antd";
 import { Header } from "antd/es/layout/layout";
 import Link from "next/link";
 import MyCard from "./mycard";
-
-const data = [
-  '001gradus100@mail.com',
-  '@ztepwrer (telegram)',
-  'sungradus1@gmail.com',
-  '+79999999999',
-];
+import Item from "antd/es/list/Item";
+import AboutMe from "./aboutMe";
 
 const Home: React.FC = () => {
   return (
@@ -26,13 +22,16 @@ const Home: React.FC = () => {
             <Link href="#projects" className={styles.header_content}>
               <div>Проекты</div>
             </Link>
+            <Link href="#comp" className={styles.header_content}>
+              <div>Компитенции</div>
+            </Link>
             <Link href="#contact" className={styles.header_content}>
               <div>Контакты</div>
             </Link>
           </div>
         </Header>
         <div className={styles.introduction}>
-          <h1 id="about">Сайт обо мне</h1>
+          <h1 id="about">Сайт программиста</h1>
           <p className={styles.gg}>
             Привет, я Каськов Степан, набирающийся опыта программист, который создаёт
             пластичные и полезные приложения и сайты. Сдесь вы можете увидеть проекты, демострирующие мои навыки в различных технологиях,
@@ -67,12 +66,27 @@ const Home: React.FC = () => {
             description="Приложение на C# для управления учителями, учениками и их оценками с базой данных на SQL."
           />
         </div>
-        <div className={styles.introduction}>
-          <List id="contact"
-          header={<div>Контакты</div>} 
-          bordered
-          
-          />
+        <div id="comp" className={styles.introduction_footer}>
+          <AboutMe />
+        </div>
+        <div id="contact" className={styles.introduction_footer}>
+          <List
+            className={styles.list_footer}
+            header={<div>Контакты</div>}
+            bordered>
+            <Item>
+              001gradus100@mail.com
+            </Item>
+            <Item>
+              @ztepwrer (telegram)
+            </Item>
+            <Item>
+              sungradus1@gmail.com
+            </Item>
+            <Item>
+              +79999999999
+            </Item>
+          </List>
         </div>
       </Layout>
     </>
