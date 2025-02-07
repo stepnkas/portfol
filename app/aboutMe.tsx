@@ -1,3 +1,4 @@
+"use client";
 import { Descriptions, Divider, Flex, List } from "antd";
 import { Header } from "antd/es/layout/layout";
 import styles from "./page.module.css";

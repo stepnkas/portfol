@@ -1,3 +1,4 @@
+"use client"
 import React from "react";
 import { Card, Divider } from "antd";
 import { Typography } from "antd";
