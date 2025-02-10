@@ -8,16 +8,33 @@ import MyCard from "./mycard";
 import Item from "antd/es/list/Item";
 import AboutMe from "./aboutMe";
 import { Skill } from "./models/Skill";
+import { User } from "./models/User";
 
 export default function Home() {
   const [skills, setSkills] = useState<Skill[]>([]);
   const [title, setTitle] = useState("");
   const [dis, setDis] = useState("");
+  const [user, setUser] = useState<User[]>([]);
+  const [name, setName] = useState("");
+  const [role, setRole] = useState("admin");
 
   useEffect(() => {
+
+    function getUser() {
+      let userlocal = localStorage.getItem("user");
+      console.log(userlocal)
+      if (userlocal != null) {
+       var userm:User= JSON.parse(userlocal);
+      } 
+    }
+    getUser();
+
     async function fetchSkills() {
       const res = await fetch("/api/skills");
       const data = await res.json();
+
+      const role = await
+
       setSkills(data);
     }
     fetchSkills();

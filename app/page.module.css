@@ -39,8 +39,6 @@
 }
 
 .card_content {
-
-
   border-radius: 8px;
   width: calc(30% - 20px); 
 }
@@ -84,6 +82,8 @@
   flex-direction: column;
   gap: 0.5rem;
   background-color: #569ea3;
+  margin-left: 100px;
+  margin-right: 100px;
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
@@ -116,7 +116,7 @@
 }
 .submitButton:hover {
   background-color: #3c7c7f;
-  transform: scale(1.05);
+  transform: scale(1.02);
 }
 
 .about {
