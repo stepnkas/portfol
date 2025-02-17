@@ -15,7 +15,7 @@ export async function POST(request: Request) {
         const newUser: User = {
             id: new Date().toISOString(),
             name: body.name || '',
-            role: body.role || '',
+            role: body.role || 'user',
             password: body.password || ''
         }
 

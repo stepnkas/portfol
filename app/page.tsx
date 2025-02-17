@@ -9,6 +9,7 @@ import Item from "antd/es/list/Item";
 import AboutMe from "./aboutMe";
 import { Skill } from "./models/Skill";
 import { User } from "./models/User";
+import RegisterForm from "./RegisterForm";
 
 export default function Home() {
   const [skills, setSkills] = useState<Skill[]>([]);
@@ -16,16 +17,27 @@ export default function Home() {
   const [dis, setDis] = useState("");
   const [user, setUser] = useState<User[]>([]);
   const [name, setName] = useState("");
-  const [role, setRole] = useState("admin");
+  const [role, setRole] = useState("user");
+
+  const USER_ADMIN = 'Step';
 
   useEffect(() => {
 
-    function getUser() {
+    async function getUser() {
       let userlocal = localStorage.getItem("user");
+      
+      
+
       console.log(userlocal)
       if (userlocal != null) {
-       var userm:User= JSON.parse(userlocal);
-      } 
+        var userm: User = JSON.parse(userlocal);
+        if ((userm.name === USER_ADMIN)) {
+          setRole('admin');
+        } else {
+          setRole('user');
+        }
+      }
+
     }
     getUser();
 
@@ -35,7 +47,7 @@ export default function Home() {
 
       const role = await
 
-      setSkills(data);
+        setSkills(data);
     }
     fetchSkills();
   }, []);
@@ -126,17 +138,19 @@ export default function Home() {
             description="Приложение на C# для управления учителями, учениками и их оценками с базой данных на SQL."
           />
           {skills.length === 0 ? (
-            <></> ) : (
-              skills.map((skill) => (
-                <MyCard key={skill.id} glav={skill.title} description={skill.dis}/>
-              ))
-            )
+            <></>) : (
+            skills.map((skill) => (
+              <MyCard key={skill.id} glav={skill.title} description={skill.dis} />
+            ))
+          )
           }
         </div>
-        <div className={styles.block_form}>
+
+        { role === 'admin' && (
+          <div className={styles.block_form}>
           <form onSubmit={handleSubmit} className={styles.form}>
             <input
-            className={styles.input}
+              className={styles.input}
               type="text"
               placeholder="Название навыка"
               value={title}
@@ -154,9 +168,17 @@ export default function Home() {
             <button type="submit" className={styles.submitButton}>Добавить навык</button>
           </form>
         </div>
+        )}
+        { role !== 'admin' && (
+          <></>
+        )}
 
         <div id="comp" className={styles.introduction_footer}>
           <AboutMe />
+        </div>
+        
+        <div>
+          <RegisterForm/>
         </div>
 
         <div id="contact" className={styles.introduction_footer}>
