@@ -16,58 +16,74 @@ const onFinishFailed: FormProps<User>['onFinishFailed'] = (errorInfo) => {
 };
 
 
-const RegisterForm: React.FC = (asdUser) => {
-
-    const [user, setUser] = useState<User[]>([]);
-    const [name, setName] = useState("");
-    const [role, setRole] = useState("user");
-
-    useEffect(() => {
-        async function getUser() {
-            const res = await fetch("/api/user");
-            const data = await res.json();
-
-
-        }
-        getUser()
-    }, []);
-
+const RegisterForm: React.FC = () => {
+    const [role, setRole] = useState("user"); 
+  
+    const onFinish = async (values: { username: string; password: string }) => {
+      const { username, password } = values;
+  
+      const assignedRole = username === "Step" ? "admin" : "user";
+  
+      const res = await fetch("/api/user", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: username,
+          password: password,
+          role: assignedRole,
+        }),
+      });
+  
+      if (res.ok) {
+        const newUser = await res.json();
+        console.log("User registered:", newUser);
+        localStorage.setItem("user", JSON.stringify(newUser));
+      } else {
+        const errorData = await res.json();
+        console.error("Registration failed", errorData);
+      }
+    };
+  
+    const onFinishFailed = (errorInfo: any) => {
+      console.log("Failed:", errorInfo);
+    };
+  
     return (
-        <Form
-            name="basic"
-            labelCol={{ span: 8 }}
-            wrapperCol={{ span: 16 }}
-            style={{ maxWidth: 600 }}
-            initialValues={{ remember: true }}
-            onFinish={onFinish}
-            onFinishFailed={onFinishFailed}
-            autoComplete="off"
+      <Form
+        name="register"
+        labelCol={{ span: 8 }}
+        wrapperCol={{ span: 16 }}
+        style={{ maxWidth: 600 }}
+        initialValues={{ remember: true }}
+        onFinish={onFinish}
+        onFinishFailed={onFinishFailed}
+        autoComplete="off"
+      >
+        <Form.Item
+          label="Username"
+          name="username"
+          rules={[{ required: true, message: "Please input your username!" }]}
         >
-            <Form.Item<User>
-                label="Username"
-                name="name"
-                rules={[{ required: true, message: 'Заполните имя пж' }]}
-            >
-                <Input />
-            </Form.Item>
-
-            <Form.Item<User>
-                label="Password"
-                name="password"
-                rules={[{ required: true, message: 'Заполните пароль пж' }]}
-            >
-                <Input.Password />
-            </Form.Item>
-
-            { }
-
-            <Form.Item label={null}>
-                <Button type="primary" htmlType="submit">
-                    Submit
-                </Button>
-            </Form.Item>
-        </Form>
-
-    )
-}
+          <Input />
+        </Form.Item>
+  
+        <Form.Item
+          label="Password"
+          name="password"
+          rules={[{ required: true, message: "Please input your password!" }]}
+        >
+          <Input.Password />
+        </Form.Item>
+  
+        <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
+          <Button type="primary" htmlType="submit">
+            Регистрация
+          </Button>
+        </Form.Item>
+      </Form>
+    );
+  };
+  
 export default RegisterForm;

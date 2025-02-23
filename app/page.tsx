@@ -15,8 +15,7 @@ export default function Home() {
   const [skills, setSkills] = useState<Skill[]>([]);
   const [title, setTitle] = useState("");
   const [dis, setDis] = useState("");
-  const [user, setUser] = useState<User[]>([]);
-  const [name, setName] = useState("");
+  
   const [role, setRole] = useState("user");
 
   const USER_ADMIN = 'Step';
@@ -109,6 +108,9 @@ export default function Home() {
             работы с вами. И спасибо за внимание.
           </p>
         </div>
+
+
+
         <h2 id="projects" className={styles.gggc}>
           Карточки моих проектов
         </h2>
@@ -145,6 +147,8 @@ export default function Home() {
           )
           }
         </div>
+
+        
 
         { role === 'admin' && (
           <div className={styles.block_form}>
